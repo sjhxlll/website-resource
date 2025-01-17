@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+        <title>沐风防红 - 域名防红|防红短链接|防红在线生成|沐风免费防红</title>
+        <meta name="Keywords" content="域名防红,沐风防洪,域名防洪,防红短链接,防红短网址,防红接口,防红跳转,QQ防红,微信防红,微信防封" />
+        <meta name="Description" content="沐风防红,QQ防红，微信防红，域名防红工具使用后可以让被红被拦截的域名正常打开（QQ和微信），直连防红（可在QQ/微信内直接打开），助站长成长，解决推广难题。沐风防红免费版永久免费，永久更新防红接口！" />
+        <!-- Bootstrap core CSS -->
+        <link href="static/Ant/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Component CSS -->
+        <link rel="stylesheet" type="text/css" href="static/Ant/css/style.css">
+        <link rel="stylesheet" type="text/css" href="static/Ant/css/material-design-iconic-font.min.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="static/Ant/css/styles.css">
+        <!-- Required Javascript Files -->
+        <script type="text/javascript" src="static/Ant/js/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+          <script src="http://cdn.staticfile.org/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="http://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <style>
+            .notgood {
+            position: fixed;
+            z-index: 10001;
+            }
+            .notgood .not-bgc {
+            display: block;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(11,21,49,.6);
+            }
+            .notgood .good-box {
+            display: block;
+            box-sizing: border-box;
+            position: fixed;
+            width: 235px;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+            padding: 24px 24px 28px;
+            background-color: #fff;
+            border-radius: 10px;
+            z-index: 10002;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,.2);
+            }
+            .notgood .good-content {
+            color: #0b1531;
+            font-size: 16px;
+            line-height: 1.5;
+            }
+            .notgood .good-btn {
+            margin-top: 20px;
+            display: inline-block;
+            width: 110px;
+            height: 37px;
+            line-height: 37px;
+            border-radius: 20px;
+            border: 2px solid #e0eaff;
+            color: #7d8bb3;
+            font-size: 13px;
+            }
+        </style>
+    </head>
+    <div id="focus-overlay" style="display: none"></div>
+    <body class='light home' id="body">
+        <a href="index.html#body" id="back-to-top"><i class="zmdi zmdi-chevron-up"></i></a>
+        <header>
+            <div class="navbar" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" onclick="In_headerFunction()">
+                            <i class="zmdi zmdi-menu"></i>
+                        </button>
+                        <a class="navbar-brand" href="fh_4p4_default.html">
+                            沐风防红					                </a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="http://fh.4p4.cn/Index.html">首页</a></li>
+                            <li><a href="Api.html">防红说明</a></li>
+                            <li><a href="https://wpa.qq.com/msgrd?v=3&uin=65256651&site=qq&menu=yes" target="_blank">联系站长</a></li>
+                            
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<style>
+    .shortbtnz {
+    padding-left: 0px;
+    position: relative;
+    }
+    .no-right {
+    padding-left: 0px;
+    padding-right: 0px;
+    position: relative;
+    }
+</style>
+        <section class="under-head-cont main-index-top" style="">
+
+            <svg id="wave" viewBox="0 0 100 15" style="position: absolute;bottom: 0;z-index: 0;"><path fill="#fff" opacity="0.5" d="M0 30 V15 Q30 3 60 15 V30z"></path><path fill="#fff" d="M0 30 V12 Q30 17 55 12 T100 11 V30z"></path></svg>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="url-list fix">
+                                                   </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="overlaylink">
+                            <div class="link-shared" id="modal">
+                                <!-- close trigger -->
+                                <div class="closelink">
+                                    <span><i class="zmdi zmdi-close"></i></span>
+                                </div>
+                                <!-- modal content -->
+                                <div class="modal-contentlink">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="share-this"></div>
+                        <div class="ajax"></div>
+                        <div class="p-relative">
+                <div class="content-right">
+                    <div class="title">防红短网址生成</div>
+                    <div class="content">
+                        <div class="col-md-2 no-right">
+                        <select id="type" class="form-control">
+                            <option value="1">t.cn [新浪]</option>
+                            <option value="3">url.cn [腾讯]</option>
+                            <option value="4">w.url.cn [微信]</option>
+                        </select>
+                        </div>
+                        <div class="col-md-5 no-right">
+                            <input type="text" class="form-control main-input" name="keyword" id="url" placeholder="输入域名（需要添加http/https）">
+                        </div>
+                        <div class="col-md-2 no-right">
+                            <select id="jump" class="form-control">
+                                <option value="1">引导跳转</option>
+                                <option value="0">直链防红</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">	<button class="btn btn-default btn-block main-button" type="submit" id="ajax_key">缩短</button></div>
+                    </div>
+                    <div id="tips"></div>
+                </div>
+            </div>
+        </div>
+
+            </div>
+        </div>
+        </section>
+
+<section class="urls-holder">
+<div class="container content">
+<div class="row" id="user-content">
+    <div class="col-md-12 addmargin public_list text-center" id="data-container">
+        <div class="url-list fix" id="url-container-0" data-id="0">
+
+        </div>
+    </div>
+</div>
+</section>
+<section class="infinity-stats">
+<div class="container">
+    <div class="row stats">
+        <div class="col-xs-4">
+            <div class="infinity-facts">
+                <p>今日生成链接数</p>
+                <h3 id="count_vip">
+                    0 次
+                </h3>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="infinity-facts">
+                <p>生成链接总数</p>
+                <h3 id="count_dwz">
+                    20 次
+                </h3>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="infinity-facts">
+                <p>总访问次数</p>
+                <h3 id="count_tongji">
+                    273 次
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+    $('#ajax_key').click(function (){
+    var url = $("#url").val();
+    layer.load(1);
+    $.ajax({
+    url: "/ShortUrl",
+    type: "GET",
+    dataType: "json",
+    data: "longurl=" + $.trim($("#url").val()) + "&type=" + $("#type").val() + "&jump=" + $("#jump").val(),
+    success: function(data){
+    layer.closeAll('loading');
+    var oDiv = document.getElementById('tips');
+    if (data.code == 1) {
+    oDiv.innerHTML = '<center><div class="tips"><div class="tips-content">&nbsp生成成功：<a href='http://fh.4p4.cn/+%20data.anturl%20+' target="_blank">' + data.anturl + '</a></div></div></center>';
+    }else{
+    oDiv.innerHTML = '<center><div class="tips"><div class="tips-content">&nbsp生成失败：' + data.msg + '</div></div></center>';
+    }
+    },
+    error: function(e){
+    layer.closeAll('loading');
+    var oDiv = document.getElementById('tips');
+    oDiv.innerHTML = '<center><div class="tips"><div class="tips-content">&nbsp生成失败，API通讯失败</div></div></center>';
+    }
+    });
+    });
+    });
+</script>
+
+</section>
+        <!--<div class="notgood">-->
+        <!--<div class="not-bgc"></div>-->
+        <!--<div class="good-box">-->
+        <!--    <h3>公告</h3>-->
+        <!--    <p class="good-content" style="margin: -1px 0 10px;">防红已更新完毕，收藏本站，永久免费。有条件的在网站顶部购买收费版获得最佳体验！</p>-->
+        <!--    <a class="good-btn" href="javascript:;">我知道了</a>-->
+        <!--</div>-->
+        <!--</div>-->
+<footer class="nousrfoot">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span style="font-size:12px;">友情链接：<a href="blog_4p4_default.html" target="_blank">沐风防红</a>｜<a href="http://fh.4p4.cn/www_4p4_default.html" target="_blank">沐风网</a></span><br>
+                <div class="row">
+                    <div class="col-md-5">
+                        Powered By 沐风 © 2020
+                    </div>
+                    <div class="col-md-7 text-right">
+                        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=65256651&amp;site=qq&amp;menu=yes" title="联系站长" target="_blank">联系站长</a>
+                    </div>
+                </div>
+                <div class="row hidden-xs"><span style="font-size:12px;"></span></div>
+            </div>
+        </div>
+    </div>
+</footer>
+        </body>
+<script>
+$(document).ready(function() {
+//$(".notgood").css("display", "block");
+$(".good-btn").on("click", function() {
+$(".notgood").css("display", "none")
+});
+$('#twr48_5').click(function(){
+$("#twr48").hide();
+});
+});
+
+function In_headerFunction() {
+var element = $("header");
+element.toggleClass("activeheadmenu2");
+}
+
+function In_ShowPosInfo() {
+$(".short-adv-sett").fadeIn(100);
+$(".main-index-top #main-form .main-options").slideDown(100);
+}
+</script>
+<script src="static/Ant/js/layer/layer.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        </html>

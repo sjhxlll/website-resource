@@ -1,0 +1,139 @@
+<!QQ65256651>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>今天吃什么</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/animatecss/3.5.2/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        *{font-family: "Microsoft YaHei"}
+        body{width: 100%; height: 100%; overflow: hidden;}
+        button{outline: none !important;}
+        .span{display: block; opacity: 0; position: absolute; cursor: default; }
+        #title{color: #bbb; text-align: center; margin-bottom: 30px; cursor: default; background-color: rgba(255, 255, 255, .5)}
+        #order{text-align: center; margin-bottom: 30px; font-size: 26px; cursor: default; background-color: rgba(255, 255, 255, .5)}
+        #btn{width: 150px;margin: 40px auto; display: table;}
+
+        #setting{ position: fixed; bottom: 20px; right: 20px; z-index: 999; }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4" style="z-index: 999">
+        <h2 id="title">今天吃什么？</h2>
+        <div id="order" class="text-primary">&nbsp;</div>
+        <button id="btn" type="button" class="btn btn-default btn-lg">开始</button>
+    </div>
+    <div class="col-xs-4"></div>
+</div>
+
+<!--设置框-->
+<button id="setting" type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">
+    <span class="glyphicon glyphicon-cog"></span>
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">菜名设置</h4>
+            </div>
+            <div class="modal-body">
+                <textarea rows="20" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="save">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    function rand(min, max){
+        return parseInt(Math.random() * (max - min + 1) + min);
+    }
+    menu = [];
+    function read_menu(){
+        if(localStorage){
+            var m = localStorage.chishenme_menu;
+            if(m == null){
+                menu = ["酸辣土豆丝", "可乐鸡翅", "麻婆豆腐", "红烧肉", "糖醋排骨", "西红柿炒鸡蛋", "青椒炒肉丝", "鱼香肉丝", "水煮肉片", "西红柿炖牛腩", "菠萝咕噜肉", "咖喱鸡翅", "香辣牛肉", "水煮鱼", "酸菜鱼", "虾皮鸡蛋羹", "皮蛋拌豆腐", "清蒸大闸蟹","微波番茄虾", "麻辣鱼", "宫保鸡丁", "家常豆腐", "皮蛋瘦肉粥", "红烧冬瓜", "湘式小炒五花肉", "剁椒鱼头", "红烧鱼块", "清蒸鲈鱼", "酸辣汤", "秘制红焖羊肉", "酱牛肉", "蒜苔炒腊肉", "杭椒牛柳", "红烧排骨", "泡菜炒年糕", "西红柿鸡蛋","土豆炖牛肉", "回锅肉", "木须肉", "水晶猪皮冻", "莲藕炖排骨", "鱼香茄子", "地三鲜", "京酱肉丝", "苦瓜炒蛋", "啤酒鸭", "西红柿鸡蛋汤", "红烧茄子", "干煸豆角", "糖醋鱼", "冬瓜排骨汤", "凉拌黄瓜", "鱼头豆腐汤", "银耳莲子汤","清蒸鱼", "葱油饼", "米汤鸡蛋羹", "蚂蚁上树", "干煸菜花", "香辣干锅土豆片", "黄豆芽炒粉条", "卤牛肉", "苦瓜鸡蛋", "盐烤花生米", "香辣虾", "小鸡炖蘑菇", "蛋黄小米粥", "杏仁瓦片", "蜜汁叉烧排骨", "栗子红烧肉", "酸豆角炒鸡胗", "干煸四季豆","尖椒土豆丝", "青椒土豆丝", "蒜香排骨", "香辣烤凤爪", "青椒炒肉", "酸萝卜老鸭汤", "葱爆羊肉", "虫草花豆腐汤", "酸辣蕨根粉", "黄豆炖猪蹄", "家常葱油饼", "辣子鸡", "盐水毛豆", "牙签肉", "避风塘炒蟹", "五香毛豆", "腊味煲仔饭","黑芝麻糊", "炸藕盒", "糯米枣", "肉末香菇豆腐", "洋葱拌木耳", "黄金玉米烙", "黄瓜拌粉皮", "白灼虾", "梅干菜干煸豆角", "小炒圆白菜", "家常红烧牛肉", "炸酱面", "肉末酸豆角", "鲜橙蒸蛋", "辣椒油", "南瓜蒸百合", "酸辣黄瓜", "家常烧茄子"];
+            } else {
+                menu = JSON.parse(m);
+            }
+        } else {
+            menu = ["屎"];
+        }
+    }
+
+    animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+
+    handle = null; 
+    $(function(){
+        body = $('body');
+        width = $(window).width();
+        height = $(window).height();
+        order = $('#order');
+        btn = $('#btn');
+        textarea = $('textarea');
+        $('#title').css('margin-top', height/2-150);
+        read_menu();
+        setInterval(function(){
+            var i = Math.floor(Math.random() * menu.length + 1)-1;
+            $('<span class="span">'+menu[i]+'</span>')
+                    .css({"top":rand(0, height), "left":rand(0, width), "font-size":rand(20, 40)})
+                    .css('color', 'rgba('+rand(0,255)+','+rand(0,255)+','+rand(0,255)+',0.'+rand(3,9)+')')
+                    .appendTo(body)
+                    .addClass('animated fadeIn')
+                    .one(animationEnd, function(){
+                $(this).removeClass('fadeIn').addClass('fadeOut').one(animationEnd, function(){
+                    $(this).remove();
+                });
+            });
+        }, 100);
+        btn.on('click', function(){
+            if(handle == null){
+                btn.text('停止');
+                handle = setInterval(function(){
+                    var i = Math.floor(Math.random() * menu.length + 1)-1;
+                    order.text(menu[i]);
+                }, 50);
+            } else {
+                btn.text('开始');
+                clearInterval(handle);
+                handle = null;
+            }
+        });
+        for(var i in menu){
+            textarea.html(textarea.html()+menu[i]+"\n");
+        }
+        $('#save').on('click', function(){
+        	if(localStorage){
+	            var text = textarea.val().split("\n");
+	            // 去除空菜名
+	            var cai = [];
+	            for(var i in text){
+	                if(text[i] != ''){
+	                    cai.push(text[i]);
+	                }
+	            }
+	            localStorage.chishenme_menu = JSON.stringify(cai);
+	            read_menu();
+            } else {
+            	alert('你的浏览器不支持localStorage，无法保存菜单！');
+            }
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+<div style="display:none">
+<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1278625820&web_id=1278625820"></script>
+</div>

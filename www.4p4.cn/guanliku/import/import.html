@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>导入惯例 - 惯例库</title>
+	<meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" media="screen" />
+	<link rel="stylesheet" href="../res/mdl/material.min.css">
+	<link rel="stylesheet" href="../res/css/stytle.css">
+	<link rel="stylesheet" href="../res/css/pc.css" media="screen and (min-width: 800px)">
+	<link rel="stylesheet" href="../res/css/mob.css" media="screen and (max-width: 800px)">
+	<script src="../res/js/jquery-2.2.0.min.js"></script>
+	<script src="../res/mdl/material.min.js"></script>
+	<script src="submit.js"></script>
+</head>
+<body>
+	<header>
+		<div class="title">
+			导入惯例 (请勿灌水！)
+		</div>
+	</header>
+	<main class="mainForSumbit">
+		<div class="mdl-card byText mdl-shadow--2dp">
+		  <div class="mdl-card__title mdl-card--border">
+		  直接导入
+		  </div>
+		  <div id="p1" class="mdl-progress mdl-js-progress mdl-progress__indeterminate "  style="display: none;"></div>
+		  <div class="mdl-card__supporting-text">
+		  	<!-- Floating Multiline Textfield -->
+			<form action="import.html#">
+			  <div class="mdl-textfield mdl-js-textfield">
+			    <textarea class="mdl-textfield__input" type="text" rows= "10" id="text" ></textarea>
+			    <label class="mdl-textfield__label " for="text">请按照格式输入，<br>每个问题之间间隔两个回车：<br>问题<br>空行<br>回答1<br>空行<br>回答2<br></label>
+			  </div>
+			</form>
+		  </div>
+		  <div class="mdl-card__actions">
+		  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btns " id="btn-byText">
+			  开始导入
+			</button>
+		  </div>
+		</div>
+
+		<div class="mdl-card byTxtFile mdl-shadow--2dp">
+		  <div class="mdl-card__title mdl-card--border">
+		  TXT文件导入
+		  </div>
+		  <div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"  style="display: none;"></div>
+		  <div class="mdl-card__supporting-text card_space">
+			<input type="file" name="file" id="file" class="inputfile" style="display: none; visibility: hidden;" ata-multiple-caption="{count} files selected" accept="text/plain"/>
+			<label class="mdl-shadow--2dp" for="file">选择txt文件</label>
+		  </div>
+		  <div class="mdl-card__actions">
+		  	<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent btns " id="btn-byTxtFile">
+			  开始导入
+			</button>
+		  </div>
+		</div>
+		<div id="test"></div>
+	</main>
+		<div aria-live="assertive" aria-atomic="true" aria-relevant="text" class="mdl-snackbar mdl-js-snackbar">
+	    <div class="mdl-snackbar__text"></div>
+	    <button type="button" class="mdl-snackbar__action"></button>
+		</div>
+	<footer class="mdl-mini-footer">
+	  <div class="mdl-mini-footer__left-section">
+	    <div class="mdl-logo">撩妹神器</div>
+	    <ul class="mdl-mini-footer__link-list">
+	      <li><a href="../guanliku.html">返回首页</a></li>
+	      <li><a href="../../www_4p4_default.html">我的网站</a></li>
+	      <li><a href="../other/about.html">关于</a></li>
+	      <li><a href="../other/help.html">导入教程</a></li>
+	    </ul>
+	  </div>
+	</footer>
+</body>
+</html>

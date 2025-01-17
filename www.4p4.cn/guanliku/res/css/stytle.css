@@ -1,0 +1,80 @@
+body{
+	background-color: #FAFAFA;
+	font-family: "Microsoft YaHei" ! important;
+	display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+}
+header{
+	width: 100%;
+	overflow: hidden;
+	background-color: #fff;
+	border-bottom: 1px solid #D8D8D8;
+	margin-bottom: 30px;
+}
+.ranPost, .mdl-spinner{
+    display: block;
+    margin: 0 auto;
+}
+main{
+    flex: 1;
+    position: relative;
+}
+#count{
+	display: block;
+	overflow: hidden;
+	background-color: #eee;
+	color: #404040;
+	font-size: 18px;
+	text-align: center;
+	padding: 20px;
+	margin-top: 30px;
+}
+.title{
+	line-height: 70px;
+	font-size: 24px;
+	font-weight: bold;
+}
+#submit{
+	color: #787D7A;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(255, 87, 34);
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 100px;
+}
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+.inputfile:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+.btns{
+	margin: 0 auto;
+    display: block;
+}
+.card_space{
+	height: 236px;
+}
+.other{
+    padding-left: 20px;
+    padding-right: 20px;
+}

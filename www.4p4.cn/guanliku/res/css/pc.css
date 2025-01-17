@@ -1,0 +1,43 @@
+header{
+	height: 70px;
+}
+.title{
+	margin-left: 30px;
+	float: left;
+}
+
+.search{
+	display: block;
+	margin: 0 auto;
+	width: 400px;
+}
+.mainForSumbit{
+	min-width: 700px;
+    margin: 0 auto;
+}
+.post_main{
+	width: 1020px;
+}
+main{
+	display: block;
+	margin: 0 auto;
+}
+.byText{
+	float: left;
+	overflow: hidden;
+}
+.byTxtFile{
+	height: 372.8px;
+	float: right;
+	overflow: hidden;
+}
+#left, #mid, #right{
+	float: left;
+	display: block;
+}
+#mid, #right{
+	margin-left: 15px;
+}
+.Post{
+	margin-bottom: 20px;
+}

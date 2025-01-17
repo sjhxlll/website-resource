@@ -1,0 +1,27 @@
+.title{
+	width: 100%;
+	overflow: hidden;
+	text-align: center;
+}
+.mdl-textfield{
+	width: 200px;
+}
+.search{
+	width: 270px;
+	margin: 0 auto;
+	display: block;
+	overflow: hidden;
+}
+.mdl-card{
+	display: block;
+    margin: 0 auto;
+}
+.byText, .byTxtFile{
+	margin: 0 auto;
+}
+.byText{
+	margin-bottom: 20px;
+}
+.Post{
+	margin-bottom: 20px;
+}

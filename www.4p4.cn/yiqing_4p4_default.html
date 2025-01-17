@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/ol.css" type="text/css">
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style> 
+	</style>
+	<script src="js/ol.js" type="text/javascript"></script>
+	<script src="js/jquery.min.js" type="text/javascript"></script>
+	<script src="js/echarts.min.js" type="text/javascript"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<title>新型冠状病毒肺炎疫情</title>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron text-center" style="margin-bottom: 5px;">
+			<h3>新型冠状病毒肺炎疫情</h3>
+			<h4>By <span class="glyphicon glyphicon-globe" style="color: blue"></span>沐风网·<span class="glyphicon glyphicon-user" style="color: green"></span>www.4p4.cn</h4>
+			<small id='timeline'></small><span id='view-count'></span>
+			<button type="button" class="btn btn-default btn-danger" onclick="clickComeOn()"><span class="glyphicon glyphicon-heart"></span><span id="come-on"></span>次加油</button>
+		</div>
+		  <div id='scroll-news'>
+		    <marquee scrollamount="12" onmouseout="this.start();" onmouseover="this.stop();" id='newsss'></marquee>
+		  </div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>实时统计<small>(每五分钟更新一次)</small></h3>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: red"></span>现存确诊</h4>		
+				<p style="color: red;font-size: 1.5em" id='current-diagnose'></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: red"></span>累计确诊</h4>		
+				<p style="color: red;font-size: 1.5em" id='diagnose'></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: #ff8100"></span>疑似</h4>		
+				<p style="color: #ff8100;font-size:  1.5em" id='suspect'></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: blue"></span>治愈</h4>		
+				<p style="color: blue;font-size:  1.5em" id="cure"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: grey"></span>重症</h4>		
+				<p style="color: grey;font-size:  1.5em" id='serious'></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: black"></span>死亡</h4>		
+				<p style="color: black;font-size:  1.5em" id='death'></p>
+			</div>
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>今日变化<small>(0例可能表示今日数据还未公布，每五分钟更新一次)</small></h3>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: red"></span>现存确诊</h4>		
+				<p style="color: red;font-size:  1.5em" id="current-diagnose-add"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: red"></span>累计确诊</h4>		
+				<p style="color: red;font-size:  1.5em" id="diagnose-add"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: #ff8100"></span>疑似</h4>		
+				<p style="color: #ff8100;font-size:  1.5em" id="suspect-add"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: blue"></span>治愈</h4>		
+				<p style="color: blue;font-size:  1.5em" id="cure-add"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: grey"></span>重症</h4>		
+				<p style="color: grey;font-size:  1.5em" id="serious-add"></p>
+			</div>
+			<div class="col-xs-4 text-center">
+				<h4><span class="glyphicon glyphicon-user" style="color: black"></span>死亡</h4>		
+				<p style="color: black;font-size:  1.5em" id="death-add"></p>
+			</div>
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>最近24小时变化曲线</h3>
+			</div>
+			<div id="charts-hour" style="height: 50vh;border-radius: 15px;margin:7px;"></div>
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>每天累计变化曲线</h3>
+			</div>
+			<div id="charts-day" style="height: 50vh;border-radius: 15px;margin:7px;"></div>
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>每天增加变化曲线</h3>
+			</div>
+			<div id="charts-day-change" style="height: 50vh;border-radius: 15px;margin:7px;"></div>
+		</div>
+		
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3><span class="glyphicon glyphicon-map-marker" style="color: #e42323;font-weight:bold">疫情地图(社区/街道办级别<small>【注：只包括部分地区公示数据】</small>)</span></h3>
+			</div>
+			<div id="map-street" style="height: 65vh;border-radius: 15px;margin:7px;">
+				<div class="btn-group btn-group-sm" style="position: absolute;z-index: 999;right:10px;">
+				    <button type="button" class="btn btn-default btn-warning" onclick="backmap(mapStreet)">回到全图</button>
+				</div>
+			</div>			
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3><span class="glyphicon glyphicon-map-marker" style="color: #e42323;font-weight:bold">疫情地图(省级)</span></h3>
+			</div>
+			<div id="map-all" style="height: 50vh;border-radius: 15px;margin:7px;">
+				<div class="btn-group btn-group-sm" style="position: absolute;z-index: 9999;right:10px;">
+				    <button type="button" class="btn btn-default btn-danger" onclick="clickbutton('yiqing',1)">确诊</button>
+				    <button type="button" class="btn btn-default btn-success" onclick="clickbutton('zhiyu',1)">治愈</button>
+				    <button type="button" class="btn btn-default" onclick="clickbutton('anxi',1)">死亡</button>
+				    <button type="button" class="btn btn-default btn-warning" onclick="backmap(mapAll)">回到全图</button>
+				</div>
+				<div class="btn-group btn-group-sm btn-group-vertical" id="orderBtnGroup1" style="padding-top:28vh;position: absolute;z-index: 999;right:10px;">
+				    <button type="button" class="btn btn-default" style="background-color: #FCE9DE">0-9</button>
+				    <button type="button" class="btn btn-default" style="background-color: #FC8D59">10-99</button>
+				    <button type="button" class="btn btn-default" style="background-color: #E34A33">100-499</button>
+				    <button type="button" class="btn btn-default" style="background-color: #B30000">>500</button>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>全国各省(自治区)疫情</h3>
+			</div>
+			<div class="table-responsive">
+			  <table class="table">
+			    <thead>
+			    	<tr>
+				        <th>序号</th>
+				        <th>省地</th>
+				        <th>现存确诊</th>
+				        <th>累计确诊</th>
+				        <th>治愈</th>
+				        <th>死亡</th>
+			    	</tr>
+			    </thead>
+			    <tbody id="table-provience">
+			    </tbody>
+			  </table>
+			</div>
+		</div>
+		<div class="row">
+			<div style="margin-top: 40px;margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3><span class="glyphicon glyphicon-map-marker" style="color: #2394e4;font-weight:bold">疫情地图(市级)</span></h3>
+			</div>
+			<div id="map-add" style="height: 50vh;border-radius: 15px;margin:7px;">
+				<div class="btn-group btn-group-sm btn-group-vertical" id="orderBtnGroup0" style="padding-top:28vh;position: absolute;z-index: 999;right:10px;">
+				    <button type="button" class="btn btn-default" style="background-color: #FCE9DE">0-9</button>
+				    <button type="button" class="btn btn-default" style="background-color: #FC8D59">10-99</button>
+				    <button type="button" class="btn btn-default" style="background-color: #E34A33">100-499</button>
+				    <button type="button" class="btn btn-default" style="background-color: #B30000">>500</button>
+				</div>
+				<div class="btn-group btn-group-sm" style="position: absolute;z-index: 999;right:10px;">
+					    <button type="button" class="btn btn-default btn-danger" onclick="clickbutton('city_yiqing',0)">确诊</button>
+					    <button type="button" class="btn btn-default btn-success" onclick="clickbutton('city_cure',0)">治愈</button>
+					    <button type="button" class="btn btn-default" onclick="clickbutton('city_anxi',0)">死亡</button>
+					    <button type="button" class="btn btn-default btn-warning" onclick="backmap(mapAdd)">回到全图</button>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 30px;">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3>全国城市确诊前50</h3>
+			</div>
+			<div class="table-responsive">
+			  <table class="table">
+			    <thead>
+			    	<tr>
+				        <th>序号</th>
+				        <th>城市地区</th>
+				        <th>现存确诊</th>
+				        <th>累计确诊</th>
+				        <th>治愈</th>
+				        <th>死亡</th>
+			    	</tr>
+			    </thead>
+			    <tbody id="table-city">
+			    </tbody>
+			  </table>
+			</div>
+		</div>
+		<div class="row">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3><span class="glyphicon glyphicon-map-marker" style="color: #e42323;font-weight:bold">疫情地图(世界)</span></h3>
+			</div>		
+			<div id="map-world" style="height: 50vh;border-radius: 15px;margin:7px;">
+				<div class="btn-group btn-group-sm btn-group-vertical" id="orderBtnGroup2" style="padding-top:28vh;position: absolute;z-index: 999;right:10px;">
+				    <button type="button" class="btn btn-default" style="background-color: #FCE9DE">0-9</button>
+				    <button type="button" class="btn btn-default" style="background-color: #FC8D59">10-99</button>
+				    <button type="button" class="btn btn-default" style="background-color: #E34A33">100-499</button>
+				    <button type="button" class="btn btn-default" style="background-color: #B30000">>500</button>
+				</div>
+				<div class="btn-group btn-group-sm" style="position: absolute;z-index: 999;right:10px">
+					    <button type="button" class="btn btn-default btn-danger" onclick="clickbutton('world_yiqing',2)">确诊</button>
+					    <button type="button" class="btn btn-default btn-success" onclick="clickbutton('world_cure_1',2)">治愈</button>
+					    <button type="button" class="btn btn-default" onclick="clickbutton('world_anxi',2)">死亡</button>
+					    <button type="button" class="btn btn-default btn-warning" onclick="backmap(mapWorld)">回到全图</button>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 30px;">
+			<div style="margin-left: 10px;border-left: 10px solid red;padding-left: 20px;">
+				<h3 id="sum-forgeign"></h3>
+			</div>
+			<div class="table-responsive">
+			  <table class="table">
+			    <thead>
+			    	<tr>
+				        <th>大陆</th>
+				        <th>国家</th>
+				        <th>现存确诊</th>
+				        <th>累计确诊</th>
+				        <th>治愈</th>
+				        <th>死亡</th>
+			    	</tr>
+			    </thead>
+			    <tbody id="table-tr">
+			    </tbody>
+			  </table>
+			</div>
+		</div>
+		<div class="row" id="news">
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<img src="qr.png" class="img-rounded" >
+			</div>
+			<div class="col-xs-12 text-left">
+					<p ><span class="glyphicon glyphicon-star" ></span>网&nbsp&nbsp&nbsp&nbsp址：<a href='http://yiqing.4p4.cn/yiqing_4p4_default.html'>http://yiqing.4p4.cn</a></p>
+					<p ><span class="glyphicon glyphicon-envelope" ></span>邮&nbsp&nbsp&nbsp&nbsp箱：admin@4p4.cn</p>
+					<p ><span class="glyphicon glyphicon-heart"></span>QQ：65256651<span style="color:grey"></span></p>
+					<p ><span class="glyphicon glyphicon-user"></span>作&nbsp&nbsp&nbsp&nbsp者：沐风</p>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	getViewCount();
+	updateViewCount();
+	getComeOnCount();
+	writeCurrentDate();
+	var chartsHour = echarts.init(document.getElementById('charts-hour'));
+	clickcharts('hour',chartsHour);
+	var chartsDay = echarts.init(document.getElementById('charts-day'));
+	clickcharts('day',chartsDay);
+	var chartsDayChange = echarts.init(document.getElementById('charts-day-change'));
+	clickcharts('zengjia',chartsDayChange);
+	var basemap=new ol.layer.Tile({
+    source: new ol.source.XYZ({
+      url: 'http://wprd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}'
+    }),
+    name: 'gaodeMap'
+  });
+  var lb=ol.proj.fromLonLat([97.84623, 21.215]);
+  var rt=ol.proj.fromLonLat([126.581863, 43.898201]);
+	var mapStreet = new ol.Map({
+		controls: ol.control.defaults({
+			attribution: false
+		}),
+		target: 'map-street',
+		layers: [basemap,layerdata('shequ')],
+		view: new ol.View({
+			center: ol.proj.fromLonLat([112,32]),
+			//extent: [lb[0], lb[1],
+			//rt[0], rt[1]],
+			zoom:5,
+			projection: new ol.proj.Projection({
+			      code: 'EPSG:3857',
+			      units: 'm',
+			      global: false
+		    })
+		})
+	});
+	mapStreet.getInteractions().forEach(value => {
+      if (value instanceof ol.interaction.PinchRotate) {
+        mapStreet.removeInteraction(value);
+      }
+    });
+
+	var mapAll = new ol.Map({
+		controls: ol.control.defaults({
+			attribution: false
+		}),
+		target: 'map-all',
+		layers: [layerdata('yiqing')],
+		view: new ol.View({
+			center: [-389443.5, 2130511.5],
+			extent: [-3244631.284441611, -78183.9820087277,
+			2316197.561991931, 4417390.312363132],
+			zoom:3,
+			projection: new ol.proj.Projection({
+			      code: 'EPSG:3415',
+			      units: 'm',
+			      global: false
+		    })
+		})
+	});
+	mapAll.getInteractions().forEach(value => {
+      if (value instanceof ol.interaction.PinchRotate) {
+        mapAll.removeInteraction(value);
+      }
+    });
+	var mapAdd = new ol.Map({
+		controls: ol.control.defaults({
+			attribution: false
+		}),
+		target: 'map-add',
+		layers: [layerdata('city_yiqing')],
+		view: new ol.View({
+			center: [-389443.5, 2130511.5],
+			extent: [-3244631.284441611, -78183.9820087277,
+			2316197.561991931, 4417390.312363132],
+			zoom:3,
+			projection: new ol.proj.Projection({
+			      code: 'EPSG:3415',
+			      units: 'm',
+			      global: false
+		    })
+		})
+	});
+	mapAdd.getInteractions().forEach(value => {
+      if (value instanceof ol.interaction.PinchRotate) {
+        mapAdd.removeInteraction(value);
+      }
+    });
+    var mapWorld = new ol.Map({
+		controls: ol.control.defaults({
+			attribution: false
+		}),
+		target: 'map-world',
+		layers: [layerdata('world_yiqing')],
+		view: new ol.View({
+			center: [0, 0],
+			extent: [-20037507.0671618, -30198184.6698779,
+			20037507.0671619, 18375858.881327],
+			zoom:1,
+			projection: new ol.proj.Projection({
+			      code: 'EPSG:3857',
+			      units: 'm',
+			      global: false
+		    })
+		})
+	});
+	mapWorld.getInteractions().forEach(value => {
+      if (value instanceof ol.interaction.PinchRotate) {
+        mapWorld.removeInteraction(value);
+      }
+    });
+	$("#orderBtnGroup .btn:first").click().addClass("active");
+	$("#orderBtnGroup").children().removeClass("active");
+	provienceTop();
+	cityTop();
+	news();
+	foreign();
+	function layerdata(name) {
+      return new ol.layer.Image({
+        source: new ol.source.ImageWMS({
+          ratio: 1,
+          url: 'http://zhongxinzhiyuan.cn:8089/geoserver/wms',
+          params: {
+            'FORMAT': 'image/png',
+            'VERSION': '1.1.1',
+            "LAYERS": name,
+            "exceptions": 'application/vnd.ogc.se_inimage',
+          }
+        }),
+        name: name
+      });
+    };
+    function clickbutton(name,label) {
+    	var idBtn='orderBtnGroup'+label;
+    	if(name.indexOf('yiqing')>-1){
+    		document.getElementById(idBtn).style.display = 'block'
+    	}else{
+    		document.getElementById(idBtn).style.display='none'
+    	}
+      var map=null;
+      label===1?map=mapAll:(label===2?map=mapWorld:map=mapAdd);
+      map.getLayers().forEach(value => map.removeLayer(value));
+      themelayer = layerdata(name);
+      map.addLayer(themelayer); 
+      writeCurrentDate();
+    };
+    function writeCurrentDate() {
+      var now = new Date();
+      var year = now.getFullYear(); //得到年份
+      var month = now.getMonth();//得到月份
+      var date = now.getDate();//得到日期
+      var day = now.getDay();//得到周几
+      var hour = now.getHours();//得到小时
+      var minu = now.getMinutes();//得到分钟
+      var sec = now.getSeconds();//得到秒
+      var MS = now.getMilliseconds();//获取毫秒
+      var week;
+      month = month + 1;
+      if (month < 10) month = "0" + month;
+      if (date < 10) date = "0" + date;
+      if (hour < 10) hour = "0" + hour;
+      if (minu < 10) minu = "0" + minu;
+      var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+      week = arr_week[day];
+
+      var time = time = year + "年" + month + "月" + date + "日" + " " + hour + ":" + minu;
+      document.getElementById('timeline').innerHTML='截止至'+time;
+      statisticsInfo();
+  	}
+  	function clickcharts(charttype,chartName) {
+	    var xdate = [];
+	    var diagnosenum = [];
+	    var suspectnum = [];
+	    var curenum = [];
+	    var deathnum = [];
+	    $.ajax({
+	      async: true,
+	      url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+	      data: {
+	        service: 'WFS',
+	        version: '1.0.0',
+	        request: 'GetFeature',
+	        typeName: charttype === 'hour' ? 'zxzy:charts' : (charttype === 'day' ? 'zxzy:day_trend' : 'zengjia'),
+	        outputFormat: 'json',
+	        cql_filter: charttype === 'hour' ? "label=1" : 'id>0'
+	      },
+	      type: 'post',
+	      async: false,
+	      dataType: 'json',
+	      success: res => {
+	        if (charttype === 'day' || charttype === 'zengjia') res.features.sort(function (a, b) {
+	          return b.properties.time - a.properties.time
+	        });
+	        res.features.map(value => {
+	          xdate.push(charttype === 'hour' ? value.properties.date : value.properties.day);
+	          diagnosenum.push((value.properties.diagnose));
+	          if (value.properties.suspect === 0) {
+	            suspectnum.push(null);
+	          } else {
+	            suspectnum.push(value.properties.suspect);
+	          }
+
+	          curenum.push(value.properties.cure);
+	          deathnum.push(value.properties.death)
+	        });
+	        xdate.reverse();
+	        diagnosenum.reverse();
+	        suspectnum.reverse();
+	        curenum.reverse();
+	        deathnum.reverse();
+	        var optioncharts = {
+	          title: {
+	          	show:false,
+	            text: charttype === 'hour' ? '过去24小时疫情变化' : (charttype === 'day' ? '每天疫情变化' : '每天增加人数'),
+	            subtext: charttype === 'hour' ? '数据来自丁香医生' : '数据来自腾讯新闻',
+	            left: 'center',
+	            textStyle: {
+	              fontSize: 38,
+	            }
+	          },
+	          tooltip: {
+	            trigger: 'axis',
+	            axisPointer: {
+	              type: 'shadow'
+	            },
+	            textStyle: {
+	              fontSize: '10',
+	              align: 'left',
+	            },
+	            position: function (pos, params, el, elRect, size) {
+	              var obj = {top: 10};
+	              obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 30;
+	              return obj;
+	            },
+	            extraCssText: 'width: 115px'
+	          },
+	          legend: {
+	            //orient:'vertical',
+	            data: ['确诊', '疑似', '治愈', '死亡'],
+	            right: 110,
+	            top: 5,
+	            textStyle: {
+	              fontSize: 12
+	            }
+	          },
+	          grid: {
+	             left: 50,
+	           },
+	          xAxis: {
+	            name: '时间',
+	            data: xdate,
+	            nameTextStyle: {
+	              fontSize: 12,
+	            },
+	            axisLabel: {
+	              fontSize: 12,
+	            },
+	          },
+	          yAxis: [{
+	            name: '人数(确诊、疑似)',
+	            type: 'value',
+	            nameTextStyle: {
+	              fontSize: 12,
+	              padding:[0,0,0,20]
+	            },
+
+	            axisLabel: {
+	              fontSize: 12,
+	            },
+	          },
+	            {
+	              name: '人数(治愈、死亡)',
+	              type: 'value',
+
+
+	              nameTextStyle: {
+	                fontSize: 12,
+	              },
+
+	              axisLabel: {
+	                fontSize: 12,
+	              },
+	            }],
+	          axisLabel: {
+	            fontSize: 12,
+	          },
+	          series: [
+	            {
+	              name: '确诊',
+	              type: 'line',
+	              smooth: true,
+	              data: diagnosenum,
+	              yAxisIndex: 0,
+	              symbolSize: 6,
+	              itemStyle: {
+	                normal: {
+	                  color: '#ff0000',//拐点颜色
+	                  borderColor: '#ff0000',//拐点边框颜色
+	                  borderWidth: 2,
+	                  lineStyle: {
+	                    width: 4,
+	                    color: '#ff0000'
+	                  },
+	                },
+	                emphasis: {
+	                  color: '#ff0000',
+	                  borderWidth: 1.5,
+	                },
+	              }
+	            },
+	            {
+	              name: '疑似',
+	              type: 'line',
+	              smooth: true,
+	              data: suspectnum,
+	              yAxisIndex: 0,
+	              symbolSize: 6,
+	              connectNulls: true,
+	              itemStyle: {
+	                normal: {
+	                  color: '#e8800a',//拐点颜色
+	                  borderColor: '#e8800a',//拐点边框颜色
+	                  borderWidth: 2,
+	                  lineStyle: {
+	                    width: 4,
+	                    color: '#e8800a'
+	                  },
+	                },
+	                emphasis: {
+	                  color: '#e8800a',
+	                  borderWidth: 1.5,
+	                },
+	              },
+
+	            },
+	            {
+	              name: '治愈',
+	              type: 'line',
+	              smooth: true,
+	              data: curenum,
+	              yAxisIndex: 1,
+	              symbolSize: 6,
+	              itemStyle: {
+	                normal: {
+	                  color: '#008ce6',//拐点颜色
+	                  borderColor: '#008ce6',//拐点边框颜色
+	                  borderWidth: 2,
+	                  lineStyle: {
+	                    width: 4,
+	                    color: '#008ce6'
+	                  },
+	                },
+	                emphasis: {
+	                  color: '#008ce6',
+	                  borderWidth: 1.5,
+	                },
+	              },
+
+	            },
+	            {
+	              name: '死亡',
+	              type: 'line',
+	              smooth: true,
+	              data: deathnum,
+	              yAxisIndex: 1,
+	              symbolSize: 6,
+	              itemStyle: {
+	                normal: {
+	                  color: '#000000',//拐点颜色
+	                  borderColor: '#000000',//拐点边框颜色
+	                  borderWidth: 2,
+	                  lineStyle: {
+	                    width: 4,
+	                    color: '#000000'
+	                  },
+	                },
+	                emphasis: {
+	                  color: '#000000',
+	                  borderWidth: 1.5,
+	                },
+	              },
+
+	            }
+
+	          ]
+	        };
+	        chartName.setOption(optioncharts)
+	      },
+	      error: data => {
+
+	      }
+	    })
+    }
+    function backmap(map) {
+      if(map===mapWorld){
+      	map.getView().setCenter([0, 0]);
+      	map.getView().setZoom(1);
+      }else if(map===mapStreet){
+		map.getView().setCenter(ol.proj.fromLonLat([112,32]));
+      	map.getView().setZoom(5);
+	  }else{
+      	map.getView().setCenter([-389443.5, 2130511.5]);
+      	map.getView().setZoom(3);
+      }
+      map.getView().setRotation(0);
+    }
+    function statisticsInfo(){
+    	$.ajax({
+        async: true,
+        url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+        data: {
+          service: 'WFS',
+          version: '1.0.0',
+          request: 'GetFeature',
+          typeName: 'zxzy:data',
+          outputFormat: 'json',
+          cql_filter: "label=1"
+        },
+        type: 'post',
+        async: false,
+        dataType: 'json',
+        success: res => {
+          $.ajax({
+		  async: true,
+		  url: 'http://zhongxinzhiyuan.cn:9090/xinzeng',
+		  data: {},
+		  type: 'get',
+		  async: false,
+		  dataType: 'json',
+		  success: ress => {
+            	var results = res.features[0].properties;
+            	if (results.suspect === 0) results.suspect = '待确认';
+            	document.getElementById('diagnose').innerHTML=results.diagnose+'例';
+            	document.getElementById('current-diagnose').innerHTML=results.currentdiagnose+'例';
+             	document.getElementById('suspect').innerHTML=results.suspect+'例';
+             	document.getElementById('cure').innerHTML=results.cure+'例';
+            	document.getElementById('death').innerHTML=results.death+'例';
+            	document.getElementById('serious').innerHTML=results.seriousCount+'例';
+            	if(ress.length>0){
+            		var adds = ress[0];
+	            	document.getElementById('current-diagnose-add').innerHTML=(adds.currentdiagnose>0?'+':(adds.currentdiagnose===0?'':'-'))+adds.currentdiagnose+'例';
+	            	document.getElementById('diagnose-add').innerHTML=(adds.diagnose>0?'+':(adds.diagnose===0?'':'-'))+adds.diagnose+'例';
+	            	document.getElementById('suspect-add').innerHTML=(adds.suspect>0?'+':(adds.suspect===0?'':'-'))+adds.suspect+'例';
+	            	document.getElementById('cure-add').innerHTML=(adds.cure>0?'+':(adds.cure===0?'':'-'))+adds.cure+'例';
+	            	document.getElementById('death-add').innerHTML=(adds.death>0?'+':(adds.death===0?'':'-'))+adds.death+'例';
+	            	document.getElementById('serious-add').innerHTML=(adds.seriousCount>0?'+':(adds.seriousCount===0?'':''))+adds.seriousCount+'例';
+            	}else{
+            		document.getElementById('current-diagnose-add').innerHTML='0例';
+            		document.getElementById('diagnose-add').innerHTML='0例';
+	            	document.getElementById('suspect-add').innerHTML='0例';
+	            	document.getElementById('cure-add').innerHTML='0例';
+	            	document.getElementById('death-add').innerHTML='0例'
+	            	document.getElementById('serious-add').innerHTML='0例'
+            	}
+            	
+            }
+          })
+        },
+        error: data => {
+
+        }
+      })
+    }
+    function news(){
+    	$.ajax({
+	      async: true,
+	      url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+	      data: {
+	        service: 'WFS',
+	        version: '1.0.0',
+	        request: 'GetFeature',
+	        typeName: 'zxzy:news',
+	        outputFormat: 'json',
+	        cql_filter: "id>0"
+	      },
+	      type: 'post',
+	      async: false,
+	      dataType: 'json',
+	      success: res => {
+	      	newss = '<span style="color:red;font-weight:bold">【社区、街道办级别疫情地图上线！】&nbsp;&nbsp;&nbsp;&nbsp;【最新报道】</span>'
+	        news = '<div style="margin-top: 40px;margin-left: 10px;border-left: 10px solid blue;padding-left: 20px;"><h3>新闻报道</h2></div>';
+	        res.features.map(value => {
+	          news += "<div class='col-sm-4 alert alert-success' style='height:20vh;overflow:hidden;'><h5><span class='label label-warning'>"+value.properties.provinceName+"</span>"+value.properties.title+"</h5><small><a href='http://yiqing.4p4.cn/%22+value.properties.sourceUrl+%22' target='view_frame' class='text-left'><p>【"+value.properties.infoSource+" "+value.properties.date+"】"+value.properties.summary+"</p></a></small></div>";
+	          newss += value.properties.date + '&nbsp&nbsp<a href='http://yiqing.4p4.cn/+%20value.properties.sourceUrl%20+' target="view_frame">' + value.properties.title + "</a>(来源：" + value.properties.infoSource + ")&nbsp&nbsp&nbsp&nbsp    "
+	        })
+	        document.getElementById('news').innerHTML = news;
+	        document.getElementById('newsss').innerHTML = newss
+	      }
+    	})
+    }
+    function foreign(){
+    	$.ajax({
+      async: true,
+      url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+      data: {
+        service: 'WFS',
+        version: '1.0.0',
+        request: 'GetFeature',
+        typeName: 'zxzy:guowai',
+        outputFormat: 'json',
+        cql_filter: "id>0"
+      },
+      type: 'post',
+      async: false,
+      dataType: 'json',
+      success: res => {
+      	var area = ''
+      	res.features.sort(function (a, b) { return b.properties.diagnose - a.properties.diagnose});
+        res.features.map(value => {
+	          var foreignStatistics='';
+	          if (value.properties.label === 1) {
+	           		document.getElementById('sum-forgeign').innerHTML='国外统计确诊('+res.features.length+'个国家，现存'+value.properties.currentdiagnose+'例，累计'+value.properties.diagnose+'例）'
+	          } else {
+		            area+='<tr><td>'+value.properties.continents+'</td><td>'+value.properties.name+'</td><td>'+value.properties.currentdiagnose +'</td><td>'+value.properties.diagnose+'</td><td>'+value.properties.cure+'</td><td>'+value.properties.death+'</td></tr>'
+		          }
+        })
+        document.getElementById('table-tr').innerHTML =area
+      }
+    	})
+    }
+    function provienceTop(){
+    	$.ajax({
+      async: true,
+      url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+      data: {
+        service: 'WFS',
+        version: '1.0.0',
+        request: 'GetFeature',
+        typeName: 'zxzy:provience_top10',
+        outputFormat: 'json',
+        cql_filter: "id>0"
+      },
+      type: 'post',
+      async: false,
+      dataType: 'json',
+      success: res => {
+      	var area = ''
+      	res.features.sort(function (a, b) { return b.properties.diagnose - a.properties.diagnose});
+        res.features.map((value,index) => {
+	        area+='<tr><td>'+(index+1)+'</td><td>'+value.properties.name+'</td><td>'+value.properties.currentdiagnose +'</td><td>'+value.properties.diagnose+'</td><td>'+value.properties.cure+'</td><td>'+value.properties.death+'</td></tr>'   
+        })
+        document.getElementById('table-provience').innerHTML =area
+      }
+    	})
+    }
+    function cityTop(){
+    	$.ajax({
+      async: true,
+      url: 'http://zhongxinzhiyuan.cn:8089/geoserver/zxzy' + '/wfs',
+      data: {
+        service: 'WFS',
+        version: '1.0.0',
+        request: 'GetFeature',
+        typeName: 'zxzy:city_top50',
+        outputFormat: 'json',
+        cql_filter: "id>0"
+      },
+      type: 'post',
+      async: false,
+      dataType: 'json',
+      success: res => {
+      	var area = ''
+      	res.features.sort(function (a, b) { return b.properties.diagnose - a.properties.diagnose});
+        res.features.map((value,index) => {
+	        area+='<tr><td>'+(index+1)+'</td><td>'+value.properties.name+'</td><td>'+value.properties.currentdiagnose +'</td><td>'+value.properties.diagnose+'</td><td>'+value.properties.cure+'</td><td>'+value.properties.death+'</td></tr>'   
+        })
+        document.getElementById('table-city').innerHTML =area
+      }
+    	})
+    }
+	function getViewCount(){
+    	$.ajax({
+		  async: true,
+		  url: 'http://zhongxinzhiyuan.cn:9090/getviewcount',
+		  data: {},
+		  type: 'get',
+		  async: false,
+		  dataType: 'json',
+		  success: res => {
+			document.getElementById('view-count').innerHTML ='&nbsp;&nbsp;<span class="glyphicon glyphicon-eye-open"></span><small>'+res[0].count+'次浏览</small>'
+
+		  }
+    	})
+    }
+    function updateViewCount(){
+    	$.ajax({
+		  async: true,
+		  url: 'http://zhongxinzhiyuan.cn:9090/updateviewcount',
+		  data: {},
+		  type: 'put',
+		  async: false,
+		  dataType: 'json',
+		  success: res => {
+		  
+
+		  }
+    	})
+    }
+	function getComeOnCount(){
+    	$.ajax({
+		  async: true,
+		  url: 'http://zhongxinzhiyuan.cn:9090/getcomeoncount',
+		  data: {},
+		  type: 'get',
+		  async: false,
+		  dataType: 'json',
+		  success: res => {
+			document.getElementById('come-on').innerHTML =res[0].count
+
+		  }
+    	})		
+	}
+	function clickComeOn(){
+		document.getElementById('come-on').innerHTML =parseInt(document.getElementById('come-on').innerText)+1;
+		$.ajax({
+		  async: true,
+		  url: 'http://zhongxinzhiyuan.cn:9090/updatecomeoncount',
+		  data: {},
+		  type: 'put',
+		  async: false,
+		  dataType: 'json',
+		  success: res => {
+		  
+
+		  }
+    	})
+	}
+</script>
+	<div style="display:none">
+<script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1278625820&web_id=1278625820"></script>
+
+</div>
+</body>
+</html>
